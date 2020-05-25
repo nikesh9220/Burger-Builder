@@ -2,11 +2,10 @@ import React from 'react'
 import classes from './BurgerIngredient.css'
 import PropTypes from 'prop-types'
 const burgerIngredient = (props) =>{
-    debugger
     let ingredient = null ;
     switch (props.type){
         case('bread-bottom') : 
-            ingredient = <div className={classes.BreadBotton}></div>
+            ingredient = <div className={classes.BreadBottom}></div>
             break;
         case('bread-top'):
             ingredient = (
