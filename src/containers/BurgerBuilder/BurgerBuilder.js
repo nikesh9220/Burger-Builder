@@ -6,6 +6,7 @@ import Modal from '../../components/UI/Model/Model'
 import OrderSummary from '../../components/OrderSummary/OrderSummary'
 import axios from '../../axios-orders'
 import Spiner from '../../components/UI/Spiner/Spiner'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 const INGREDIENTS_PRICES ={
             salad:23,
             bacon:10,
@@ -139,4 +140,4 @@ render(){
     );
 };
 }
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder,axios);
