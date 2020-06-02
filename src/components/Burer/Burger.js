@@ -13,7 +13,7 @@ const burger = (props) => {
             } 
         );
     }).reduce((arr,el) =>{
-        debugger;
+    
         return arr.concat(el)
     },[]);
     console.log(transformedIngredients)
