@@ -13,7 +13,7 @@ const withErrorHandler = (WrappedComponent,axios)=>{
                 error:null
             })
         }
-        componentDidMount(){
+        componentwillMount(){
             axios.interceptors.request.use(req =>{
                 debugger
                 this.setState({
