@@ -8,14 +8,14 @@ const withErrorHandler = (WrappedComponent,axios)=>{
             error:null
         }
         modalClickHandler = () =>{
-            debugger;
+            
             this.setState({
                 error:null
             })
         }
         componentwillMount(){
            this.reqInterceptors = axios.interceptors.request.use(req =>{
-                debugger
+            
                 this.setState({
                     error : null
                 })
