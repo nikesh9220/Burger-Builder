@@ -62,6 +62,15 @@ class ContactData extends Component{
          ))
         .catch(error => this.setState({loading:false}))
     }
+    inputChangedHadler =(event,inputIdentifier) =>{
+        debugger
+        //Fetch Old state
+        const updatedOrderForm = {...this.state.orderForm};
+        updatedOrderForm[inputIdentifier].value = event.target.value;
+        this.setState({
+            orderForm:updatedOrderForm
+        })
+    }
     render(){
         let formElementArray= [];
         for(let key in this.state.orderForm){
@@ -83,6 +92,7 @@ class ContactData extends Component{
                              formElement.config.elementType} 
                              elementConfig={formElement.config.elementConfig} 
                              elementValue={formElement.config.value}
+                             changed={(event) => this.inputChangedHadler(event,formElement.id)}
                              /> 
                     );
                 })
