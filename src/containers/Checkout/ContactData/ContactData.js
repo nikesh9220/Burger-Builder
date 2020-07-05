@@ -47,11 +47,15 @@ class ContactData extends Component{
         event.preventDefault();
         console.log(this.props.ingredients)
         this.setState({loading:true})
-        debugger
+        const formData = {};
+        for(let formElementIdentifier in this.state.orderForm){
+            formData[formElementIdentifier]= this.state.orderForm[formElementIdentifier].value;
+        }
+        
         const order ={
             ingredients: this.props.ingredients,
             price:this.props.totalPrice,
-            
+            customer:formData
             
 
         }
@@ -63,7 +67,7 @@ class ContactData extends Component{
         .catch(error => this.setState({loading:false}))
     }
     inputChangedHadler =(event,inputIdentifier) =>{
-        debugger
+        
         //Fetch Old state
         const updatedOrderForm = {...this.state.orderForm};
         updatedOrderForm[inputIdentifier].value = event.target.value;
@@ -74,7 +78,7 @@ class ContactData extends Component{
     render(){
         let formElementArray= [];
         for(let key in this.state.orderForm){
-            debugger
+            
             formElementArray.push({
                 id:key,
                 config:this.state.orderForm[key],
@@ -82,7 +86,7 @@ class ContactData extends Component{
             });
         }
         let form = (
-        <form>
+        <form onSubmit={this.orderHandler}>
             {
                 formElementArray.map(formElement =>{
                     return(
@@ -100,7 +104,7 @@ class ContactData extends Component{
             {/* <Input  lable="Email" type="text" name="email" placeholder="Enter Your Email"/>
             <Input  lable="Street" type="text" name="street" placeholder="Enter Your Street"/>
             <Input  lable="Postal Code" type="text" name="postalcode" placeholder="Enter Your Postal Code"/> */}
-            <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
+            <Button btnType="Success" >ORDER</Button>
         </form>
         );
         if(this.state.loading){

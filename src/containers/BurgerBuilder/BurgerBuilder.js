@@ -21,7 +21,7 @@ class BurgerBuilder extends Component{
             const ingredinets = resp.data
             Object.keys(ingredinets)
                         .map(igKey =>{
-                            debugger
+                            
                             if(ingredinets[igKey] > 0){
                                 this.priceCalculator(igKey,ingredinets[igKey])
                             }
@@ -89,7 +89,7 @@ class BurgerBuilder extends Component{
             queryParams.push(encodeURIComponent(i) + "=" + encodeURIComponent(this.state.ingredients[i]))
         };
         queryParams.push('price='+ this.state.totalPrice)
-        debugger
+        
         let param = queryParams.join('&');
         this.props.history.push({
             pathname: '/checkout',
@@ -109,7 +109,7 @@ class BurgerBuilder extends Component{
             })
     }
     addIngredientHandler = (type) =>{
-        debugger
+        
         const updatedCount = this.state.ingredients[type] + 1;
         const updatedIngredient ={
             ...this.state.ingredients

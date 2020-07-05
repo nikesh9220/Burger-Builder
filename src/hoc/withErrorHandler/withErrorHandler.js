@@ -22,7 +22,7 @@ const withErrorHandler = (WrappedComponent,axios)=>{
                 return req;
             })
             this.respInterceptors =axios.interceptors.response.use(resp => resp ,error =>{
-                debugger
+                
                 this.setState({
                     error : error
                 })
