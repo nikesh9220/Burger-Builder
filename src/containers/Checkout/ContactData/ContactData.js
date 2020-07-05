@@ -13,13 +13,20 @@ class ContactData extends Component{
                 type: props.type,
                 placeholder : props.placeholder 
             },
-            value: props.value
+            value: props.value,
+            validation:{
+                required:true,
+                minLength: props.minLength,
+                maxLength: props.maxLength
+            },
+            valid:false,
+            touched:false
         }
     }
     state = {
         orderForm:{
             name:this.config({elementType:'input',type: 'text',placeholder:'Please Enter Your Name',value:''}),
-            zipcode:this.config({elementType:'input',type: 'text',placeholder:'Please Enter Zipcode',value:''}),
+            zipcode:this.config({elementType:'input',type: 'text',placeholder:'Please Enter Zipcode',value:'',minLength:5,maxLength:5}),
             country:this.config({elementType:'input',type: 'text',placeholder:'Please Enter Country',value:''}),
             email:this.config({elementType:'input',type: 'text',placeholder:'Please Enter Email',value:''}),
             deliveryMethod:{
@@ -43,11 +50,29 @@ class ContactData extends Component{
         //     email:'test@burger.com',
         // deliveryMethod:'fastest'
     }
+    checkValidity(value,rules){
+        debugger
+        let isValid = true;
+        if(rules){
+            if(rules.required){
+                isValid = value.trim() !== '' && isValid;
+            }
+            if(rules.minLength){
+                isValid = value.length >= rules.minLength && isValid;
+            }
+            if(rules.maxLength){
+                isValid = value.length <= rules.maxLength && isValid ;
+            }
+        }
+        
+        return isValid;
+    }
     orderHandler = (event) => {
         event.preventDefault();
         console.log(this.props.ingredients)
         this.setState({loading:true})
         const formData = {};
+        debugger
         for(let formElementIdentifier in this.state.orderForm){
             formData[formElementIdentifier]= this.state.orderForm[formElementIdentifier].value;
         }
@@ -71,6 +96,9 @@ class ContactData extends Component{
         //Fetch Old state
         const updatedOrderForm = {...this.state.orderForm};
         updatedOrderForm[inputIdentifier].value = event.target.value;
+        updatedOrderForm[inputIdentifier].valid = this.checkValidity(event.target.value,updatedOrderForm[inputIdentifier].validation)
+        updatedOrderForm[inputIdentifier].touched = true;
+        console.log(updatedOrderForm)
         this.setState({
             orderForm:updatedOrderForm
         })
@@ -96,6 +124,9 @@ class ContactData extends Component{
                              formElement.config.elementType} 
                              elementConfig={formElement.config.elementConfig} 
                              elementValue={formElement.config.value}
+                             invalid={!formElement.config.valid}
+                             shouldValidate={formElement.config.validation}
+                             touched={formElement.config.touched}
                              changed={(event) => this.inputChangedHadler(event,formElement.id)}
                              /> 
                     );
